@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class WeightSorter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Введите количество посетителей: ");
+        int count = scanner.nextInt();
+        
+        List<Integer> weights = new ArrayList<>();
+        
+        for (int i = 0; i < count; i++) {
+            System.out.print("Введите вес посетителя " + (i + 1) + ": ");
+            int weight = scanner.nextInt();
+            weights.add(weight);
+        }
+        
+        Collections.sort(weights, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer weight1, Integer weight2) {
+                int sum1 = calculateDigitSum(weight1);
+                int sum2 = calculateDigitSum(weight2);
+                return Integer.compare(sum1, sum2);
+            }
+            
+            private int calculateDigitSum(int num) {
+                int sum = 0;
+                while (num > 0) {
+                    sum += num % 10;
+                    num /= 10;
+                }
+                return sum;
+            }
+        });
+        
+        System.out.println("Отсортированный список весов по сумме цифр:");
+        for (int weight : weights) {
+            System.out.println(weight);
+        }
+        
+        scanner.close();
+    }
+}
